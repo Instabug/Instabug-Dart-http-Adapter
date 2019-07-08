@@ -75,18 +75,6 @@ void main() {
         .called(1);
   });
 
-  test('expect instabug http client PATCH to return response', () async {
-    
-    when<dynamic>(instabugHttpClient.client.patch(any))
-        .thenAnswer((_) async => mockedResponse);
-    var result = await instabugHttpClient.patch(url);
-    expect(result, isInstanceOf<http.Response>());
-    expect(result, mockedResponse);
-    verify(instabugHttpClient.logger
-            .logHttpResponse(mockedResponse, startTime: anyNamed('startTime')))
-        .called(1);
-  });
-
   test('expect instabug http client POST to return response', () async {
     
     when<dynamic>(instabugHttpClient.client.post(any))
