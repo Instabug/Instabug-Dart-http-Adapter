@@ -10,11 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  instabug:
-    # git:
-    #    url: https://github.com/Instabug/instabug-flutter.git
-    #    ref: feature/networkLoggin
-    path: ../Instabug-Flutter
+  instabug_flutter:
   http:
 
 dev_dependencies:
