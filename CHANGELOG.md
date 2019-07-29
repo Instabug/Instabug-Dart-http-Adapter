@@ -1,3 +1,3 @@
-## [0.0.1] - TODO: Add release date.
+## [1.0.0] - 29/7/2019.
 
-* TODO: Describe initial release.
+* Adds implementation for the instabug_http_client library which supports Instabug network logging for the dart library: http.
