@@ -1,6 +1,6 @@
 
-import 'package:instabug/NetworkLogger.dart';
-import 'package:instabug/models/network_data.dart';
+import 'package:instabug_flutter/NetworkLogger.dart';
+import 'package:instabug_flutter/models/network_data.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
