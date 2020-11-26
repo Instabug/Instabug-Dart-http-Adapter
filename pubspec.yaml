@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  instabug_flutter: ^1.0.0
+  instabug_flutter: ^8.6.4
   http: ^0.12.0+2
   meta: ^1.1.6
 
