@@ -1,52 +1,43 @@
-
 import 'package:instabug_flutter/NetworkLogger.dart';
 import 'package:instabug_flutter/models/network_data.dart';
 import 'package:http/http.dart' as http;
-import 'package:meta/meta.dart';
 
 class InstabugHttpLogger {
+  void onLooger(http.Response response, {DateTime? startTime}) {
+    final Map<String, dynamic> requestHeaders = <String, dynamic>{};
+    response.request!.headers.forEach((String header, dynamic value) {
+      requestHeaders[header] = value[0];
+    });
 
-  @visibleForTesting
-  @protected
-  void logHttpResponse(http.Response response, { DateTime startTime }) {
-    if (response == null) {
-      return;
-    }
+    final http.Request? request = response.request as http.Request;
 
-    http.Request request = response.request;
     if (request == null) {
       return;
     }
 
-    NetworkData networkData = NetworkData();
+    final NetworkData requestData = NetworkData(
+      startTime: startTime!,
+      method: request.method,
+      url: request.url.toString(),
+      requestHeaders: requestHeaders,
+      requestBody: request.body,
+    );
 
-    // fill request data
-    networkData.url = request.url.toString();
-    networkData.method = request.method;
-    if (request.body != null) {
-      networkData.requestBody = request.body;
-    }
+    final DateTime endTime = DateTime.now();
 
-    request.headers.forEach((header, value){
-      networkData.requestHeaders[header] = value;
+    final Map<String, dynamic> responseHeaders = <String, dynamic>{};
+    response.headers.forEach((String header, dynamic value) {
+      responseHeaders[header] = value[0];
     });
 
-    // fill response data
-    networkData.status = response.statusCode;
-    response.headers.forEach((header, value){
-      networkData.responseHeaders[header] = value;
-    });
-    
-    if (response.body != null) {
-      networkData.responseBody = response.body;
-    }
-    if (response.headers.containsKey('content-type')) {
-      networkData.contentType = response.headers['content-type'];
-    }
-
-    networkData.duration = DateTime.now().difference(startTime).inMilliseconds;
-
-    // send network data to native platform
-    NetworkLogger.networkLog(networkData);
+    NetworkLogger.networkLog(requestData.copyWith(
+      status: response.statusCode,
+      duration: endTime.difference(requestData.startTime).inMilliseconds,
+      contentType: response.headers.containsKey('content-type')
+          ? response.headers['content-type']
+          : '',
+      responseHeaders: responseHeaders,
+      responseBody: response.body,
+    ));
   }
 }
