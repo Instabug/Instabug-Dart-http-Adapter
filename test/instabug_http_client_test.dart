@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -13,8 +14,8 @@ import 'package:instabug_http_client/instabug_http_logger.dart';
 import 'instabug_http_client_test.mocks.dart';
 
 @GenerateMocks([
-  InstabugHttpClient,
   InstabugHttpLogger,
+  InstabugHttpClient,
 ])
 Future<void> main() async {
   const Map<String, String> fakeResponse = <String, String>{
@@ -122,10 +123,19 @@ Future<void> main() async {
   test('expect instabug http client SEND to return response', () async {
     final http.StreamedResponse response =
         http.StreamedResponse(Stream.empty(), 200);
-    when<dynamic>(instabugHttpClient.client.send(http.Request('GET', url)))
+    final http.StreamedRequest request = http.StreamedRequest('POST', url)
+      ..headers[HttpHeaders.contentTypeHeader] =
+          'application/json; charset=utf-8'
+      ..headers[HttpHeaders.userAgentHeader] = 'Dart';
+    when<dynamic>(instabugHttpClient.client.send(request))
         .thenAnswer((_) async => response);
-    final http.StreamedResponse result = await instabugHttpClient.send(http.Request('GET', url));
-    expect(result, isInstanceOf<http.StreamedResponse>());
+    final Future<http.StreamedResponse> responseFuture =
+        instabugHttpClient.send(request);
+    request
+      ..sink.add('{"hello": "world"}'.codeUnits)
+      ..sink.close();
+
+    final http.StreamedResponse result = await responseFuture;
     expect(result, response);
     verifyNever(instabugHttpClient.logger
         .onLooger(mockedResponse, startTime: anyNamed('startTime')));

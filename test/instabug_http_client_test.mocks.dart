@@ -29,15 +29,29 @@ class _FakeResponse_2 extends _i1.Fake implements _i2.Response {}
 class _FakeStreamedResponse_3 extends _i1.Fake implements _i2.StreamedResponse {
 }
 
+/// A class which mocks [InstabugHttpLogger].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockInstabugHttpLogger extends _i1.Mock
+    implements _i3.InstabugHttpLogger {
+  MockInstabugHttpLogger() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  void onLooger(_i2.Response? response, {DateTime? startTime}) =>
+      super.noSuchMethod(
+          Invocation.method(#onLooger, [response], {#startTime: startTime}),
+          returnValueForMissingStub: null);
+  @override
+  String toString() => super.toString();
+}
+
 /// A class which mocks [InstabugHttpClient].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockInstabugHttpClient extends _i1.Mock
     implements _i4.InstabugHttpClient {
-  MockInstabugHttpClient() {
-    _i1.throwOnMissingStub(this);
-  }
-
   @override
   _i2.Client get client => (super.noSuchMethod(Invocation.getter(#client),
       returnValue: _FakeClient_0()) as _i2.Client);
@@ -123,24 +137,6 @@ class MockInstabugHttpClient extends _i1.Mock
               returnValue:
                   Future<_i2.StreamedResponse>.value(_FakeStreamedResponse_3()))
           as _i5.Future<_i2.StreamedResponse>);
-  @override
-  void onLooger(_i2.Response? response, {DateTime? startTime}) =>
-      super.noSuchMethod(
-          Invocation.method(#onLooger, [response], {#startTime: startTime}),
-          returnValueForMissingStub: null);
-  @override
-  String toString() => super.toString();
-}
-
-/// A class which mocks [InstabugHttpLogger].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockInstabugHttpLogger extends _i1.Mock
-    implements _i3.InstabugHttpLogger {
-  MockInstabugHttpLogger() {
-    _i1.throwOnMissingStub(this);
-  }
-
   @override
   void onLooger(_i2.Response? response, {DateTime? startTime}) =>
       super.noSuchMethod(
