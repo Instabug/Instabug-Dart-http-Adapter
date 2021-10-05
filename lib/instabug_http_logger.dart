@@ -32,7 +32,7 @@ class InstabugHttpLogger {
 
     NetworkLogger.networkLog(requestData.copyWith(
       status: response.statusCode,
-      duration: endTime.difference(requestData.startTime).inMilliseconds,
+      duration: endTime.difference(requestData.startTime).inMicroseconds,
       contentType: response.headers.containsKey('content-type')
           ? response.headers['content-type']
           : '',
