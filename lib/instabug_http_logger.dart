@@ -3,7 +3,7 @@ import 'package:instabug_flutter/NetworkLogger.dart';
 import 'package:instabug_flutter/models/network_data.dart';
 
 class InstabugHttpLogger {
-  void onLooger(http.Response response, {DateTime? startTime}) {
+  void onLogger(http.Response response, {DateTime? startTime}) {
     final Map<String, dynamic> requestHeaders = <String, dynamic>{};
     response.request!.headers.forEach((String header, dynamic value) {
       requestHeaders[header] = value;

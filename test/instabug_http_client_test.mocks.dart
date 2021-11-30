@@ -39,7 +39,7 @@ class MockInstabugHttpLogger extends _i1.Mock
   }
 
   @override
-  void onLooger(_i2.Response? response, {DateTime? startTime}) =>
+  void onLogger(_i2.Response? response, {DateTime? startTime}) =>
       super.noSuchMethod(
           Invocation.method(#onLooger, [response], {#startTime: startTime}),
           returnValueForMissingStub: null);
@@ -138,7 +138,7 @@ class MockInstabugHttpClient extends _i1.Mock
                   Future<_i2.StreamedResponse>.value(_FakeStreamedResponse_3()))
           as _i5.Future<_i2.StreamedResponse>);
   @override
-  void onLooger(_i2.Response? response, {DateTime? startTime}) =>
+  void onLogger(_i2.Response? response, {DateTime? startTime}) =>
       super.noSuchMethod(
           Invocation.method(#onLooger, [response], {#startTime: startTime}),
           returnValueForMissingStub: null);

@@ -28,7 +28,7 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
     return client
         .delete(url, body: body, headers: headers, encoding: encoding)
         .then((http.Response response) {
-      logger.onLooger(response, startTime: startTime);
+      logger.onLogger(response, startTime: startTime);
       return response;
     });
   }
@@ -37,7 +37,7 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
   Future<http.Response> get(Uri url, {Map<String, String>? headers}) {
     final DateTime startTime = DateTime.now();
     return client.get(url, headers: headers).then((http.Response response) {
-      logger.onLooger(response, startTime: startTime);
+      logger.onLogger(response, startTime: startTime);
       return response;
     });
   }
@@ -46,7 +46,7 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
   Future<http.Response> head(Uri url, {Map<String, String>? headers}) {
     final DateTime startTime = DateTime.now();
     return client.head(url, headers: headers).then((http.Response response) {
-      logger.onLooger(response, startTime: startTime);
+      logger.onLogger(response, startTime: startTime);
       return response;
     });
   }
@@ -58,7 +58,7 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
     return client
         .patch(url, headers: headers, body: body, encoding: encoding)
         .then((http.Response response) {
-      logger.onLooger(response, startTime: startTime);
+      logger.onLogger(response, startTime: startTime);
       return response;
     });
   }
@@ -70,7 +70,7 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
     return client
         .post(url, headers: headers, body: body, encoding: encoding)
         .then((http.Response response) {
-      logger.onLooger(response, startTime: startTime);
+      logger.onLogger(response, startTime: startTime);
       return response;
     });
   }
@@ -82,7 +82,7 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
     return client
         .put(url, headers: headers, body: body, encoding: encoding)
         .then((http.Response response) {
-      logger.onLooger(response, startTime: startTime);
+      logger.onLogger(response, startTime: startTime);
       return response;
     });
   }
