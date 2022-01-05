@@ -4,7 +4,7 @@ import 'package:instabug_flutter/models/network_data.dart';
 
 class InstabugHttpLogger {
   void onLogger(http.Response response, {DateTime? startTime}) {
-    NetworkLogger networkLogger = NetworkLogger();
+    final NetworkLogger networkLogger = NetworkLogger();
 
     final Map<String, dynamic> requestHeaders = <String, dynamic>{};
     response.request!.headers.forEach((String header, dynamic value) {
@@ -31,6 +31,19 @@ class InstabugHttpLogger {
     response.headers.forEach((String header, dynamic value) {
       responseHeaders[header] = value;
     });
+    int requestBodySize = 0;
+    if (requestHeaders.containsKey('content-length')) {
+      requestBodySize = int.parse(responseHeaders['content-length'] ?? '0');
+    } else {
+      requestBodySize = request.body.length;
+    }
+
+    int responseBodySize = 0;
+    if (responseHeaders.containsKey('content-length')) {
+      responseBodySize = int.parse(responseHeaders['content-length'] ?? '0');
+    } else {
+      responseBodySize = response.body.length;
+    }
 
     networkLogger.networkLog(requestData.copyWith(
       status: response.statusCode,
@@ -40,6 +53,11 @@ class InstabugHttpLogger {
           : '',
       responseHeaders: responseHeaders,
       responseBody: response.body,
+      requestBodySize: requestBodySize,
+      responseBodySize: responseBodySize,
+      requestContentType: request.headers.containsKey('content-type')
+          ? request.headers['content-type']
+          : '',
     ));
   }
 }
