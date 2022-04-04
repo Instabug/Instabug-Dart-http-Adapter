@@ -24,6 +24,7 @@ Future<void> main() async {
   late Uri url;
   final http.Response mockedResponse =
       http.Response(json.encode(fakeResponse), 200);
+
   late InstabugHttpClient instabugHttpClient;
 
   setUp(() {
@@ -120,8 +121,9 @@ Future<void> main() async {
   });
 
   test('expect instabug http client SEND to return response', () async {
-    final http.StreamedResponse response =
-        http.StreamedResponse(Stream.empty(), 200);
+    final http.StreamedResponse response = http.StreamedResponse(
+        const Stream<List<int>>.empty(), 200,
+        contentLength: 0);
     final http.StreamedRequest request = http.StreamedRequest('POST', url)
       ..headers[HttpHeaders.contentTypeHeader] =
           'application/json; charset=utf-8'
@@ -135,9 +137,19 @@ Future<void> main() async {
       ..sink.close();
 
     final http.StreamedResponse result = await responseFuture;
-    expect(result, response);
-    verifyNever(instabugHttpClient.logger
-        .onLogger(mockedResponse, startTime: anyNamed('startTime')));
+    expect(result, isInstanceOf<http.StreamedResponse>());
+    expect(result.headers, response.headers);
+    expect(result.statusCode, response.statusCode);
+    expect(result.contentLength, response.contentLength);
+    expect(result.isRedirect, response.isRedirect);
+    expect(result.persistentConnection, response.persistentConnection);
+    expect(result.reasonPhrase, response.reasonPhrase);
+    expect(result.request, response.request);
+    expect(await result.stream.bytesToString(),
+        await response.stream.bytesToString());
+    final MockInstabugHttpLogger logger =
+        instabugHttpClient.logger as MockInstabugHttpLogger;
+    verify(logger.onLogger(any, startTime: anyNamed('startTime'))).called(1);
   });
 
   test('expect instabug http client CLOSE to be called', () async {
