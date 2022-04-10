@@ -96,6 +96,23 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
       client.readBytes(url, headers: headers);
 
   @override
-  Future<http.StreamedResponse> send(http.BaseRequest request) =>
-      client.send(request);
+  Future<http.StreamedResponse> send(http.BaseRequest request) {
+    final DateTime startTime = DateTime.now();
+    return client.send(request).then((http.StreamedResponse streamedResponse) =>
+        http.Response.fromStream(streamedResponse)
+            .then((http.Response response) {
+          logger.onLogger(response, startTime: startTime);
+          // Need to return new StreamedResponse, as body only can be listened once
+          return http.StreamedResponse(
+            Stream<List<int>>.value(response.bodyBytes),
+            response.statusCode,
+            contentLength: response.contentLength,
+            request: response.request,
+            headers: response.headers,
+            isRedirect: response.isRedirect,
+            persistentConnection: response.persistentConnection,
+            reasonPhrase: response.reasonPhrase,
+          );
+        }));
+  }
 }
