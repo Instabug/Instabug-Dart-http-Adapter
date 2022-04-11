@@ -1,3 +1,8 @@
+## [2.2.0] - 11/4/2022.
+
+* Adds support for logging network requests using ```send``` method.
+
+
 ## [2.1.0] - 5/1/2022.
 
 * Fixes network log compilation error.
