@@ -1,6 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:instabug_flutter/NetworkLogger.dart';
-import 'package:instabug_flutter/models/network_data.dart';
+import 'package:instabug_flutter/instabug_flutter.dart';
 
 class InstabugHttpLogger {
   void onLogger(http.Response response, {DateTime? startTime}) {
