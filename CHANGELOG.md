@@ -1,3 +1,7 @@
+## Unreleased
+
+- Adds support for MultipartRequest.
+
 ## [2.2.1] - 2/8/2022
 
 - Bumps [instabug_flutter](https://pub.dev/packages/instabug_flutter) to v11
