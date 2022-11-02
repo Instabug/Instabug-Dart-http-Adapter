@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+// to maintain supported versions prior to Flutter 3.3
+// ignore: unnecessary_import
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
