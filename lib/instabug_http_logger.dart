@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:instabug_flutter/instabug_flutter.dart';
 
@@ -6,22 +8,27 @@ class InstabugHttpLogger {
     final NetworkLogger networkLogger = NetworkLogger();
 
     final Map<String, dynamic> requestHeaders = <String, dynamic>{};
-    response.request!.headers.forEach((String header, dynamic value) {
+    response.request?.headers.forEach((String header, dynamic value) {
       requestHeaders[header] = value;
     });
 
-    final http.Request? request = response.request as http.Request;
+    final http.BaseRequest? request = response.request;
 
     if (request == null) {
       return;
     }
+    final String requestBody = request is http.MultipartRequest
+        ? json.encode(request.fields)
+        : request is http.Request
+            ? request.body
+            : '';
 
     final NetworkData requestData = NetworkData(
       startTime: startTime!,
       method: request.method,
       url: request.url.toString(),
       requestHeaders: requestHeaders,
-      requestBody: request.body,
+      requestBody: requestBody,
     );
 
     final DateTime endTime = DateTime.now();
@@ -34,7 +41,7 @@ class InstabugHttpLogger {
     if (requestHeaders.containsKey('content-length')) {
       requestBodySize = int.parse(responseHeaders['content-length'] ?? '0');
     } else {
-      requestBodySize = request.body.length;
+      requestBodySize = requestBody.length;
     }
 
     int responseBodySize = 0;
