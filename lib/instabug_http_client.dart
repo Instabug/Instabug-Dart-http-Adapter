@@ -1,9 +1,10 @@
 library instabug_http_client;
 
 import 'dart:convert';
+// to maintain supported versions prior to Flutter 3.3
+// ignore: unnecessary_import
 import 'dart:typed_data';
 
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:instabug_http_client/instabug_http_logger.dart';
 import 'package:meta/meta.dart';
