@@ -10,11 +10,10 @@ import 'package:instabug_http_client/instabug_http_logger.dart';
 import 'package:meta/meta.dart';
 
 class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
-  InstabugHttpClient() : client = http.Client() {
+  InstabugHttpClient({http.Client? client}) : client = client ?? http.Client() {
     logger = this;
   }
-  @visibleForTesting
-  http.Client client;
+  final http.Client client;
 
   @visibleForTesting
   late InstabugHttpLogger logger;
