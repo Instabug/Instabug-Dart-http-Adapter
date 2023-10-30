@@ -1,4 +1,4 @@
-## [2.4.0]
+## Unreleased
 
 - Enables InstabugHttpClient to wrap internal client
 
