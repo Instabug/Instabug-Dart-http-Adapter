@@ -1,6 +1,6 @@
 ## Unreleased
 
-- Enables InstabugHttpClient to wrap internal client
+- Enables `InstabugHttpClient` to wrap an internal `http` client.
 
 ## [2.3.0] - 3/11/2022
 
