@@ -10,6 +10,11 @@ import 'package:instabug_http_client/instabug_http_logger.dart';
 import 'package:meta/meta.dart';
 
 class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
+  /// Constructs a new [InstabugHttpClient].
+  ///
+  /// Provide a value for [client] in order to override the internal client used
+  /// by this class. This can be useful if you are working with other libraries
+  /// that require other custom client implementations
   InstabugHttpClient({http.Client? client}) : client = client ?? http.Client() {
     logger = this;
   }
