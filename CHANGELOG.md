@@ -1,3 +1,7 @@
+## Unreleased
+
+- Enables `InstabugHttpClient` to wrap an internal `http` client.
+
 ## [2.3.0] - 3/11/2022
 
 - Adds support for MultipartRequest.
