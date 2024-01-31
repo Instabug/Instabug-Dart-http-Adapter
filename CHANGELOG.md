@@ -1,3 +1,11 @@
+# Changelog
+
+## Unreleased
+
+### Added
+
+- Add support for Instabug Flutter SDK v12 ([#17](https://github.com/Instabug/Instabug-Dart-http-Adapter/pull/17)).
+
 ## [2.3.0] - 3/11/2022
 
 - Adds support for MultipartRequest.
