@@ -4,7 +4,6 @@ if [ ! "${VERSION}" ] || [ -z "${VERSION}" ];then
     echo "Instabug: err: Version Number not found."
     exit 1
 else
-    echo ${PUB_CREDENTIALS}
     mkdir -p .pub-cache
     cat <<EOF > $HOME/.pub-cache/credentials.json
     ${PUB_CREDENTIALS}
