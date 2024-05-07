@@ -12,13 +12,13 @@ jobs:
       - run: flutter pub publish --dry-run
 
    release:
+    resource_class: large
     docker:
       - image: cirrusci/flutter
     steps:
       - checkout
       - run: chmod +x release.sh
       - run: ./release.sh
-    resource_class: large
 
 
 workflows:
@@ -30,6 +30,12 @@ workflows:
           type: approval
           requires:
             - test
+          filters:
+            branches:
+              only: master
       - release:
           requires:
             - hold
+          filters:
+            branches:
+              only: master
