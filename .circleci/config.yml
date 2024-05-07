@@ -17,7 +17,8 @@ jobs:
     steps:
       - checkout
       - run: chmod +x release.sh
-      - run: ./release.sh  
+      - run: ./release.sh
+
 
 workflows:
   version: 2
@@ -36,4 +37,4 @@ workflows:
             - hold
           filters:
             branches:
-              only: master      
+              only: master
