@@ -28,12 +28,6 @@ workflows:
           type: approval
           requires:
             - test
-          filters:
-            branches:
-              only: master
       - release:
           requires:
             - hold
-          filters:
-            branches:
-              only: master      
