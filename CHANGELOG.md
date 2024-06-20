@@ -1,6 +1,14 @@
+# Changelog
+
 ## Unreleased
 
 - Enables `InstabugHttpClient` to wrap an internal `http` client.
+
+## [2.4.0] - 7/05/2024
+
+### Added
+
+- Add support for Instabug Flutter SDK v12 and v13 ([#17](https://github.com/Instabug/Instabug-Dart-http-Adapter/pull/17)).
 
 ## [2.3.0] - 3/11/2022
 
