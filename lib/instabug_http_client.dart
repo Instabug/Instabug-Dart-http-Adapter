@@ -1,6 +1,7 @@
 library instabug_http_client;
 
 import 'dart:convert';
+
 // to maintain supported versions prior to Flutter 3.3
 // ignore: unnecessary_import
 import 'dart:typed_data';
@@ -10,9 +11,15 @@ import 'package:instabug_http_client/instabug_http_logger.dart';
 import 'package:meta/meta.dart';
 
 class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
-  InstabugHttpClient() : client = http.Client() {
+  /// Constructs a new [InstabugHttpClient].
+  ///
+  /// Provide a value for [client] in order to override the internal client used
+  /// by this class. This can be useful if you are working with other libraries
+  /// that require other custom client implementations
+  InstabugHttpClient({http.Client? client}) : client = client ?? http.Client() {
     logger = this;
   }
+
   @visibleForTesting
   http.Client client;
 
