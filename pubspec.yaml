@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^1.2.0
+  http: ">=0.13.0 <2.0.0"
   instabug_flutter: ">=11.0.0 <14.0.0"
   meta: ^1.3.0
 
