@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- Add support for Trace network requests from Instabug using traceparent
+  header ([#18](https://github.com/Instabug/Instabug-Dio-Interceptor/pull/18)).
+
+
 ## [2.4.0] - 7/05/2024
 
 ### Added
