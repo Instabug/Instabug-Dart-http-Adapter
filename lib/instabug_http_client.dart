@@ -2,6 +2,7 @@ library instabug_http_client;
 
 import 'dart:convert';
 import 'dart:io';
+
 // to maintain supported versions prior to Flutter 3.3
 // ignore: unnecessary_import
 import 'dart:typed_data';
@@ -13,22 +14,10 @@ import 'package:instabug_http_client/instabug_http_logger.dart';
 import 'package:meta/meta.dart';
 
 class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
-
   InstabugHttpClient() : client = http.Client() {
     logger = this;
-    String proxy = Platform.isAndroid ? '192.168.1.104:9090' : '192.168.1.104:9090';
-
-    HttpClient httpClient = HttpClient();
-
-    httpClient.findProxy = (uri) {
-      return "PROXY $proxy;";
-    };
-
-    httpClient.badCertificateCallback = (X509Certificate cert, String host, int port) => true;
-
-    client = IOClient(httpClient);
-
   }
+
   final NetworkLogger _networklogger = NetworkLogger();
   @visibleForTesting
   http.Client client;
@@ -43,11 +32,11 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
   Future<http.Response> delete(Uri url,
       {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
     final DateTime startTime = DateTime.now();
-    final Map<String, String> requestHeader = headers??<String,String>{};
-    final String? w3Header =await  _networklogger.getW3Header(
+    final Map<String, String> requestHeader = headers ?? <String, String>{};
+    final String? w3Header = await _networklogger.getW3Header(
         requestHeader, startTime.millisecondsSinceEpoch);
-    if(w3Header!=null){
-      requestHeader['traceparent']=w3Header;
+    if (w3Header != null) {
+      requestHeader['traceparent'] = w3Header;
     }
     return client
         .delete(url, body: body, headers: requestHeader, encoding: encoding)
@@ -60,13 +49,15 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
   @override
   Future<http.Response> get(Uri url, {Map<String, String>? headers}) async {
     final DateTime startTime = DateTime.now();
-    final Map<String, String> requestHeader = headers??<String,String>{};
-    final String? w3Header =await  _networklogger.getW3Header(
+    final Map<String, String> requestHeader = headers ?? <String, String>{};
+    final String? w3Header = await _networklogger.getW3Header(
         requestHeader, startTime.millisecondsSinceEpoch);
-    if(w3Header!=null){
-      requestHeader['traceparent']=w3Header;
+    if (w3Header != null) {
+      requestHeader['traceparent'] = w3Header;
     }
-    return client.get(url, headers: requestHeader).then((http.Response response) {
+    return client
+        .get(url, headers: requestHeader)
+        .then((http.Response response) {
       logger.onLogger(response, startTime: startTime);
       return response;
     });
@@ -75,13 +66,15 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
   @override
   Future<http.Response> head(Uri url, {Map<String, String>? headers}) async {
     final DateTime startTime = DateTime.now();
-    final Map<String, String> requestHeader = headers??<String,String>{};
-    final String? w3Header =await  _networklogger.getW3Header(
+    final Map<String, String> requestHeader = headers ?? <String, String>{};
+    final String? w3Header = await _networklogger.getW3Header(
         requestHeader, startTime.millisecondsSinceEpoch);
-    if(w3Header!=null){
-      requestHeader['traceparent']=w3Header;
+    if (w3Header != null) {
+      requestHeader['traceparent'] = w3Header;
     }
-    return client.head(url, headers: requestHeader).then((http.Response response) {
+    return client
+        .head(url, headers: requestHeader)
+        .then((http.Response response) {
       logger.onLogger(response, startTime: startTime);
       return response;
     });
@@ -91,11 +84,11 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
   Future<http.Response> patch(Uri url,
       {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
     final DateTime startTime = DateTime.now();
-    final Map<String, String> requestHeader = headers??<String,String>{};
-    final String? w3Header =await  _networklogger.getW3Header(
+    final Map<String, String> requestHeader = headers ?? <String, String>{};
+    final String? w3Header = await _networklogger.getW3Header(
         requestHeader, startTime.millisecondsSinceEpoch);
-    if(w3Header!=null){
-      requestHeader['traceparent']=w3Header;
+    if (w3Header != null) {
+      requestHeader['traceparent'] = w3Header;
     }
     return client
         .patch(url, headers: requestHeader, body: body, encoding: encoding)
@@ -109,11 +102,11 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
   Future<http.Response> post(Uri url,
       {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
     final DateTime startTime = DateTime.now();
-    final Map<String, String> requestHeader = headers??<String,String>{};
-    final String? w3Header =await  _networklogger.getW3Header(
+    final Map<String, String> requestHeader = headers ?? <String, String>{};
+    final String? w3Header = await _networklogger.getW3Header(
         requestHeader, startTime.millisecondsSinceEpoch);
-    if(w3Header!=null){
-      requestHeader['traceparent']=w3Header;
+    if (w3Header != null) {
+      requestHeader['traceparent'] = w3Header;
     }
     return client
         .post(url, headers: requestHeader, body: body, encoding: encoding)
@@ -127,12 +120,13 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
   Future<http.Response> put(Uri url,
       {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
     final DateTime startTime = DateTime.now();
-    final Map<String, String> requestHeader = headers??<String,String>{};
-    final String? w3Header =await  _networklogger.getW3Header(
+    final Map<String, String> requestHeader = headers ?? <String, String>{};
+    final String? w3Header = await _networklogger.getW3Header(
         requestHeader, startTime.millisecondsSinceEpoch);
-    if(w3Header!=null){
-      requestHeader['traceparent']=w3Header;
-    }    return client
+    if (w3Header != null) {
+      requestHeader['traceparent'] = w3Header;
+    }
+    return client
         .put(url, headers: requestHeader, body: body, encoding: encoding)
         .then((http.Response response) {
       logger.onLogger(response, startTime: startTime);
@@ -152,10 +146,10 @@ class InstabugHttpClient extends InstabugHttpLogger implements http.Client {
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
     final DateTime startTime = DateTime.now();
     final Map<String, String> requestHeader = request.headers;
-    final String? w3Header =await  _networklogger.getW3Header(
+    final String? w3Header = await _networklogger.getW3Header(
         requestHeader, startTime.millisecondsSinceEpoch);
-    if(w3Header!=null){
-      requestHeader['traceparent']=w3Header;
+    if (w3Header != null) {
+      requestHeader['traceparent'] = w3Header;
     }
     return client.send(request).then((http.StreamedResponse streamedResponse) =>
         http.Response.fromStream(streamedResponse)
