@@ -4,7 +4,7 @@
 
 ### Added
 
-- Add support for tracing network requests from Instabug to services like Datadog and New Relic ([#481](https://github.com/Instabug/Instabug-Flutter/pull/481)).
+- Add support for tracing network requests from Instabug to services like Datadog and New Relic ([#21](https://github.com/Instabug/Instabug-Dart-http-Adapter/pull/21/)).
 
 
 ## [2.4.0] - 7/05/2024
