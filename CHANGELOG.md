@@ -4,8 +4,8 @@
 
 ### Added
 
-- Add support for tracing network requests from Instabug to services like Datadog and New Relic ([#21](https://github.com/Instabug/Instabug-Dart-http-Adapter/pull/21/)).
-
+- Add support for Trace network requests from Instabug using traceparent
+  header ([#21](https://github.com/Instabug/Instabug-Dart-http-Adapter/pull/21)).
 
 ## [2.4.0] - 7/05/2024
 
