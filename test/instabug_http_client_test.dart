@@ -28,7 +28,7 @@ Future<void> main() async {
   setUpAll(() {
     Instabug.$setHostApi(mHost);
     NetworkLogger.$setHostApi(mHost);
-    when(mHost.isW3CFeatureFlagsEnabled()).thenAnswer((_)=> Future.value(<String?, bool?>{
+    when(mHost.isW3CFeatureFlagsEnabled()).thenAnswer((_)=> Future<Map<String,bool>>.value(<String, bool>{
       'isW3cCaughtHeaderEnabled': true,
       'isW3cExternalGeneratedHeaderEnabled': false,
       'isW3cExternalTraceIDEnabled': true,
