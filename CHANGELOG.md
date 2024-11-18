@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.5.0] - 18/11/2024
+
+### Added
+
+- Add support for tracing network requests from Instabug to services like Datadog and New Relic ([#21](https://github.com/Instabug/Instabug-Dart-http-Adapter/pull/21)).
+
 ## [2.4.0] - 7/05/2024
 
 ### Added

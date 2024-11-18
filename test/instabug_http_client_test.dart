@@ -7,6 +7,8 @@ import 'dart:typed_data';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
+import 'package:instabug_flutter/instabug_flutter.dart';
+import 'package:instabug_flutter/src/generated/instabug.api.g.dart';
 import 'package:instabug_http_client/instabug_http_client.dart';
 import 'package:instabug_http_client/instabug_http_logger.dart';
 import 'package:mockito/annotations.dart';
@@ -17,8 +19,22 @@ import 'instabug_http_client_test.mocks.dart';
 @GenerateMocks(<Type>[
   InstabugHttpLogger,
   InstabugHttpClient,
+  InstabugHostApi,
 ])
 Future<void> main() async {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  final MockInstabugHostApi mHost = MockInstabugHostApi();
+
+  setUpAll(() {
+    Instabug.$setHostApi(mHost);
+    NetworkLogger.$setHostApi(mHost);
+    when(mHost.isW3CFeatureFlagsEnabled()).thenAnswer((_)=> Future<Map<String,bool>>.value(<String, bool>{
+      'isW3cCaughtHeaderEnabled': true,
+      'isW3cExternalGeneratedHeaderEnabled': false,
+      'isW3cExternalTraceIDEnabled': true,
+    }));
+  });
+
   const Map<String, String> fakeResponse = <String, String>{
     'id': '123',
     'activationCode': '111111',
@@ -37,7 +53,7 @@ Future<void> main() async {
   });
 
   test('expect instabug http client GET to return response', () async {
-    when<dynamic>(instabugHttpClient.client.get(url))
+    when<dynamic>(instabugHttpClient.client.get(url,headers: anyNamed('headers')))
         .thenAnswer((_) async => mockedResponse);
     final http.Response result = await instabugHttpClient.get(url);
     expect(result, isInstanceOf<http.Response>());
@@ -48,7 +64,7 @@ Future<void> main() async {
   });
 
   test('expect instabug http client HEAD to return response', () async {
-    when<dynamic>(instabugHttpClient.client.head(url))
+    when<dynamic>(instabugHttpClient.client.head(url,headers: anyNamed('headers')))
         .thenAnswer((_) async => mockedResponse);
     final http.Response result = await instabugHttpClient.head(url);
     expect(result, isInstanceOf<http.Response>());
@@ -59,7 +75,7 @@ Future<void> main() async {
   });
 
   test('expect instabug http client DELETE to return response', () async {
-    when<dynamic>(instabugHttpClient.client.delete(url))
+    when<dynamic>(instabugHttpClient.client.delete(url,headers: anyNamed('headers')))
         .thenAnswer((_) async => mockedResponse);
     final http.Response result = await instabugHttpClient.delete(url);
     expect(result, isInstanceOf<http.Response>());
@@ -70,7 +86,7 @@ Future<void> main() async {
   });
 
   test('expect instabug http client PATCH to return response', () async {
-    when<dynamic>(instabugHttpClient.client.patch(url))
+    when<dynamic>(instabugHttpClient.client.patch(url,headers: anyNamed('headers')))
         .thenAnswer((_) async => mockedResponse);
     final http.Response result = await instabugHttpClient.patch(url);
     expect(result, isInstanceOf<http.Response>());
@@ -81,7 +97,7 @@ Future<void> main() async {
   });
 
   test('expect instabug http client POST to return response', () async {
-    when<dynamic>(instabugHttpClient.client.post(url))
+    when<dynamic>(instabugHttpClient.client.post(url,headers: anyNamed('headers')))
         .thenAnswer((_) async => mockedResponse);
     final http.Response result = await instabugHttpClient.post(url);
     expect(result, isInstanceOf<http.Response>());
@@ -92,7 +108,7 @@ Future<void> main() async {
   });
 
   test('expect instabug http client PUT to return response', () async {
-    when<dynamic>(instabugHttpClient.client.put(url))
+    when<dynamic>(instabugHttpClient.client.put(url,headers: anyNamed('headers')))
         .thenAnswer((_) async => mockedResponse);
     final http.Response result = await instabugHttpClient.put(url);
     expect(result, isInstanceOf<http.Response>());
@@ -104,7 +120,7 @@ Future<void> main() async {
 
   test('expect instabug http client READ to return response', () async {
     const String response = 'Some response string';
-    when<dynamic>(instabugHttpClient.client.read(url))
+    when<dynamic>(instabugHttpClient.client.read(url,headers: anyNamed('headers')))
         .thenAnswer((_) async => response);
 
     final String result = await instabugHttpClient.read(url);
@@ -161,7 +177,7 @@ Future<void> main() async {
   });
 
   test('stress test for GET method', () async {
-    when<dynamic>(instabugHttpClient.client.get(url))
+    when<dynamic>(instabugHttpClient.client.get(url,headers: anyNamed('headers')))
         .thenAnswer((_) async => mockedResponse);
     for (int i = 0; i < 10000; i++) {
       await instabugHttpClient.get(url);
