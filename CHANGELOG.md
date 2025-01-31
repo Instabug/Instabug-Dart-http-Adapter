@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- Enables `InstabugHttpClient` to wrap an internal `http` client.
+
 ## [2.5.0] - 18/11/2024
 
 ### Added
