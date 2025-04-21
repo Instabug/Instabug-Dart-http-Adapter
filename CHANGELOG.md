@@ -4,7 +4,7 @@
 
 ### Added
 
-- Bump max SDK version constraint ([#23](https://github.com/Instabug/Instabug-Dart-http-Adapter/pull/23)
+- Bump max SDK version constraint ([#23](https://github.com/Instabug/Instabug-Dart-http-Adapter/pull/23)).
 
 ## [2.5.0] - 18/11/2024
 
