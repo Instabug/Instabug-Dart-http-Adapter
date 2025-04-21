@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.5.1] - 21/04/2025
+
+### Added
+
+- Bump max SDK version constraint ([#23](https://github.com/Instabug/Instabug-Dart-http-Adapter/pull/23)
+
 ## [2.5.0] - 18/11/2024
 
 ### Added
